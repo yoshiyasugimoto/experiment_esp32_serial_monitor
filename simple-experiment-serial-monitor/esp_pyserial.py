@@ -6,6 +6,10 @@ import re
 '''Specify the port'''
 ser = serial.Serial("/dev/tty.SLAB_USBtoUART", 115200, timeout=True)
 
+column_name = ["elapsed_time", "peltier_temp", "touch_value", "touch_judgment"]
+csv_data = [column_name]
+start_time = time.time()
+
 
 def create_csv(data_list):
     for data in data_list:
@@ -28,9 +32,6 @@ def create_data(serial_data):
         return
 
 
-column_name = ["elapsed_time", "peltier_temp", "touch_value", "touch_judgment"]
-csv_data = [column_name]
-start_time = time.time()
 '''Get and display serial data.Save data csv with ctrl + c'''
 try:
     while True:
@@ -38,7 +39,7 @@ try:
         serial_data = create_data(line)
         if serial_data:
             print(serial_data)
-            csv_data.append([serial_data[0], serial_data[1], serial_data[2],serial_data[3]])
+            csv_data.append([serial_data[0], serial_data[1], serial_data[2], serial_data[3]])
         else:
             continue
 
@@ -48,5 +49,3 @@ except KeyboardInterrupt:
         print("FINISH")
     else:
         print("Data is large")
-
-# if __name__ == "__main__":
