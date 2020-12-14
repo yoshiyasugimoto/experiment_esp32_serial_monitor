@@ -13,7 +13,7 @@ start_time = time.time()
 
 def create_csv(data_list):
     for data in data_list:
-        with open("./esp_serial_data/sample.csv", mode="a") as f:
+        with open("esp_serial_data/red_temp15_hori.csv", mode="a") as f:
             writer = csv.writer(f, lineterminator="\n")
             writer.writerow(data)
     return
