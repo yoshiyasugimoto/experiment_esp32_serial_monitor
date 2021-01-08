@@ -1,3 +1,4 @@
 simple-experiment-serial-monitor/.python-version
 Pipfile.lock
-simple-experiment-serial-monitor/esp_serial_data/
+simple-experiment-serial-monitor/simple-experimetal-data/
+simple-experiment-serial-monitor/experimental_data/**
