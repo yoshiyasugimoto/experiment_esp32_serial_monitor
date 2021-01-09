@@ -5,7 +5,7 @@ import time
 import serial
 import re
 
-'''Specify the port'''
+"""Specify the port"""
 ser = serial.Serial("/dev/tty.SLAB_USBtoUART", 115200, timeout=True)
 
 column_name = ["elapsed_time", "peltier_temp", "touch_value", "touch_judgment"]
@@ -41,7 +41,9 @@ def create_csv(data_list, save_file: str):
 
 
 def create_data(serial_data):
-    num_extraction_lis = re.findall(r'\d[.]\d\d|\d\d[.]\d\d|\d\d\d[.]\d\d|\d\d|\d|false|true', serial_data)
+    num_extraction_lis = re.findall(
+        r"\d[.]\d\d|\d\d[.]\d\d|\d\d\d[.]\d\d|\d\d|\d|false|true", serial_data
+    )
     if len(num_extraction_lis) == 3:
         current_time = time.time()
         elapsed_time = round(current_time - start_time, 2)
@@ -53,7 +55,7 @@ def create_data(serial_data):
         return
 
 
-'''Get and display serial data.Save data csv with ctrl + c'''
+"""Get and display serial data.Save data csv with ctrl + c"""
 try:
     prev_touch_judgment = "false"
     prev_elapsed_time = 0
@@ -69,7 +71,9 @@ try:
                 prev_touch_judgment = "false"
                 print(touch_time)
             print(serial_data)
-            csv_data.append([serial_data[0], serial_data[1], serial_data[2], serial_data[3]])
+            csv_data.append(
+                [serial_data[0], serial_data[1], serial_data[2], serial_data[3]]
+            )
         else:
             continue
 
