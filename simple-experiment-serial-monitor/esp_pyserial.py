@@ -23,6 +23,7 @@ def generate_file_name(touch_second=None) -> str:
         temp_subjective_evaluation = input("温度の評価を1~3で(1=冷たい,2=常温,3=温かい)行ってください: ")
     file_name = f"temp-sub-eval[{temp_subjective_evaluation}]-" + file_name
     if touch_second:
+        touch_second = input(f"記録する接触時間は{touch_second}[s]でよろしいでしょうか？")
         file_name = f"experimental_data/{file_name}-touch_time-{touch_second}s.csv"
     else:
         file_name = f"experimental_data/{file_name}-touch_time_not_working.csv"
