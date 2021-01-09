@@ -13,9 +13,10 @@ csv_data = [column_name]
 start_time = time.time()
 
 touch_time = None
+start_touch_time = None
 
 
-def generate_file_name(touch_second=None) -> str:
+def generate_file_name(touch_second=None, start_touch_second=None) -> str:
     file_name = input("boxの色と提示した温度を入力してください(例:blue-temp40): ")
     if not file_name:
         file_name = input("boxの色と提示した温度を入力してください(例:blue-temp40): ")
@@ -23,8 +24,12 @@ def generate_file_name(touch_second=None) -> str:
     if not temp_subjective_evaluation:
         temp_subjective_evaluation = input("温度の評価を1~3で(1=冷たい,2=常温,3=温かい)行ってください: ")
     file_name = f"temp-sub-eval[{temp_subjective_evaluation}]-" + file_name
-    if touch_second:
-        touch_second = input(f"記録する接触時間は{touch_second}[s]でよろしいでしょうか？")
+    if touch_second and start_touch_second:
+        input_touch_second = input(f"記録する接触時間は{touch_second}[s]でよろしいでしょうか？[接触開始時間:{start_touch_second}s]")
+        if input_touch_second is None:
+            touch_second = touch_second
+        else:
+            touch_second = input_touch_second
         file_name = f"experimental_data/{file_name}-touch_time-{touch_second}s.csv"
     else:
         file_name = f"experimental_data/{file_name}-touch_time_not_working.csv"
@@ -68,8 +73,9 @@ try:
                 prev_touch_judgment = serial_data[3]
             if prev_touch_judgment == "true" and serial_data[3] == "false":
                 touch_time = round(serial_data[0] - prev_elapsed_time, 2)
+                start_touch_time = round(prev_elapsed_time, 2)
                 prev_touch_judgment = "false"
-                print(touch_time)
+                print(f"接触時間:{touch_time}s")
             print(serial_data)
             csv_data.append(
                 [serial_data[0], serial_data[1], serial_data[2], serial_data[3]]
@@ -79,7 +85,7 @@ try:
 
 except KeyboardInterrupt:
     if len(csv_data) < 10000:
-        create_csv(csv_data, generate_file_name(touch_time))
+        create_csv(csv_data, generate_file_name(touch_time, start_touch_time))
         print("FINISH:")
     else:
         print("Data is large")
