@@ -18,14 +18,15 @@ def generate_file_name(touch_second=None) -> str:
     file_name = input("boxの色と提示した温度を入力してください(例:blue-temp40): ")
     if not file_name:
         file_name = input("boxの色と提示した温度を入力してください(例:blue-temp40): ")
-    if touch_second:
+    temp_subjective_evaluation = input("温度の評価を1~3で(1=冷たい,2=常温,3=温かい)行ってください: ")
+    if not temp_subjective_evaluation:
         temp_subjective_evaluation = input("温度の評価を1~3で(1=冷たい,2=常温,3=温かい)行ってください: ")
-        if not temp_subjective_evaluation:
-            temp_subjective_evaluation = input("温度の評価を1~3で(1=冷たい,2=常温,3=温かい)行ってください: ")
-        file_name = f"temp-sub-eval[{temp_subjective_evaluation}]-" + file_name
+    file_name = f"temp-sub-eval[{temp_subjective_evaluation}]-" + file_name
+    if touch_second:
         file_name = f"experimental_data/{file_name}-touch_time-{touch_second}s.csv"
     else:
-        raise Exception("Error touch sensorが反応していません")
+        file_name = f"experimental_data/{file_name}-touch_time_not_working.csv"
+        print("touch sensorが正常に動作していません")
     return file_name
 
 
