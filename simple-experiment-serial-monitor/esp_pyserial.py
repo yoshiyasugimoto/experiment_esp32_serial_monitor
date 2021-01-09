@@ -60,7 +60,8 @@ def create_data(serial_data):
         return
 
 
-"""Get and display serial data.Save data csv with ctrl + c"""
+if __name__ == '__main__':
+    """Get and display serial data.Save data csv with ctrl + c"""
 try:
     prev_touch_judgment = "false"
     prev_elapsed_time = 0
