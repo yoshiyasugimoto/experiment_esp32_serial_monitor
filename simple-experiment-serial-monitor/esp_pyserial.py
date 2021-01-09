@@ -1,4 +1,5 @@
 import csv
+import logging
 import time
 
 import serial
@@ -27,7 +28,7 @@ def generate_file_name(touch_second=None) -> str:
         file_name = f"experimental_data/{file_name}-touch_time-{touch_second}s.csv"
     else:
         file_name = f"experimental_data/{file_name}-touch_time_not_working.csv"
-        print("touch sensorが正常に動作していません")
+        logging.warning("touch sensorが正常に動作していません")
     return file_name
 
 
